@@ -1,0 +1,28 @@
+select.select2 option {
+  text-transform: capitalize;
+}
+.box-title, td{
+	text-transform: capitalize;
+}
+div.details aside span {
+	float: right;
+	margin-right: 3em;
+}
+caption {
+	text-align: center;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+div.invoice-table {
+	margin-top:1em;
+	border-top: 1px solid gray;
+	padding-top: 1em;
+}
+div.fuel {
+	border-top: 1px dotted #ffc400;
+	border-bottom: 1px dotted #ffc400;
+}
+div.staff {
+	margin-bottom: 1em;
+	margin-top: 1em;
+}
