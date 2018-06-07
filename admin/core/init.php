@@ -8,14 +8,16 @@ ini_set("SMTP", "gmail");
 
 $GLOBALS['config'] = array(
 	'app' => array(
-		'name' => 'Placeholder',
+		'name' => 'VPN',
 		'version' => "1.0",
 		'title' => "VPN",
 		'header' => "Admin",
-		'currency' => 'N',
 		'copyright' => "valence solutions",
 		'designer' => "CEO",
-        'delete_files_permanently' => 1
+        'max_file_size' => ['vpn' => 10000],
+        'vpn_file_required' => 1,       //used in validate class only
+        'vpn_file_extension' => ['ovpn'],
+        'vpn_file_type' => ['application/octet-stream']
 	),
 	'cards' => array(
 		'max_size' => 2000000,

@@ -207,25 +207,26 @@ class Validate {
         return $this;
     }
 
-    public function checkCard($pic, $key) {
-        if ($_FILES[$pic]["error"][$key] == UPLOAD_ERR_OK and !empty($_FILES[$pic]) ) {
+    public function checkConfigFile($file, $required = true) {
+        if ($_FILES[$file]["error"] == UPLOAD_ERR_OK and !empty($_FILES[$file]) ) {
 
-            if (!in_array($_FILES[$pic]["type"][$key], Config::get('cards/formats'))) {
-                $this->addError("jpeg/jpg/png/gif photos only");
+            if (!in_array($_FILES[$file]["type"], Config::get('app/vpn_file_type'))) {
+                $this->addError(implode(Config::get('app/vpn_file_extension'))." formats only");
             }
-            if ($_FILES[$pic]["size"][$key] > Config::get('cards/max_size') ) {
-                $this->addError("Photo size must be less than 1MB");
+            if ($_FILES[$file]["size"] > Config::get('app/max_file_size/vpn') ) {
+                $this->addError("config file size must be less than". Config::get('app/max_file_size/vpn')."B");
             }
         } else {
-            switch( $_FILES[$pic]["error"][$key] ) {
+            switch( $_FILES[$file]["error"] ) {
                 case UPLOAD_ERR_INI_SIZE:
-                    $this->addError("The photo is larger than the server allows.");
+                    $this->addError("The file is larger than the server allows.");
                     break;
                 case UPLOAD_ERR_FORM_SIZE:
-                    $this->addError("The photo is larger than the script allows.");
+                    $this->addError("The file is larger than the script allows.");
                     break;
                 case UPLOAD_ERR_NO_FILE:
-                    $this->addError("No file was uploaded. Make sure you choose a file to upload.");
+                    if(Config::get('app/vpn_file_required') && $required)
+                        $this->addError("No file was uploaded. Make sure you choose a file to upload.");
                     break;
             }
 

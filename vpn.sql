@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2018 at 12:00 PM
+-- Generation Time: Jun 07, 2018 at 09:02 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -56,6 +56,9 @@ CREATE TABLE `vpn` (
   `url` mediumtext NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `server_name` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `file_url` varchar(255) NOT NULL,
   `status` varchar(1) NOT NULL DEFAULT '1',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -64,9 +67,8 @@ CREATE TABLE `vpn` (
 -- Dumping data for table `vpn`
 --
 
-INSERT INTO `vpn` (`id`, `url`, `username`, `password`, `status`, `created_at`) VALUES
-(1, 'http://www.vpn.net', 'efe', 'password', '1', '2018-06-03 09:47:02'),
-(6, 'trinity', 'trinity', 'chovwebhh', '1', '2018-06-03 11:42:37');
+INSERT INTO `vpn` (`id`, `url`, `username`, `password`, `server_name`, `country`, `file_url`, `status`, `created_at`) VALUES
+(1, 'http://www.vpn.com', 'vpn', 'password23', 'server', 'country', 'config_files/5b198d6151e5dconfig.ovpn', '1', '2018-06-07 20:45:05');
 
 --
 -- Indexes for dumped tables
@@ -97,7 +99,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `vpn`
 --
 ALTER TABLE `vpn`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

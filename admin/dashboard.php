@@ -42,13 +42,17 @@ $vpn = $vpnObj->get(['status', '=', '1']);
                     <!-- /.box-header -->
                     <div class="box-body">
                         <ul class="list-group">
-                        <?php 
+                        <?php
+                        if(!empty($vpn)){
                           foreach ($vpn as $key => $value) { ?>
                             <li class="list-group-item">
                               <p class="text text-success text-bold"><strong>URL:</strong> <?php echo escape($value->url) ?></p>
                               <p class="text text-info text-bold"><strong>Username:</strong> <?php echo escape($value->username) ?></p>
                               <p class="text text-danger text-bold"><strong>Password:</strong> <?php echo escape($value->password) ?></p>
-                              <p>
+                                <p class="text text-success text-bold"><strong>Country:</strong> <?php echo (!empty($value->country)) ? escape($value->country) : "No country"?></p>
+                                <p class="text text-info text-bold"><strong>Server Name:</strong> <?php echo (!empty($value->server_name)) ? escape($value->server_name) : "No server name"?></p>
+                                <p class="text text-danger text-bold"><strong>Config file:</strong> <?php echo (!empty($value->file_url)) ? "Available" : "Not available"?></p>
+                                <p>
                                 <div class="row">
                                     <div class="col-md-9"></div>
                                     <div class="col-md-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -58,7 +62,9 @@ $vpn = $vpnObj->get(['status', '=', '1']);
                               </div>
                               </p>
                             </li>
-                        <?php } 
+                        <?php } }else { ?>
+                            <p>No vpn .</p>
+                        <?php }
                         ?>
                       </ul>
                     </div>
@@ -72,7 +78,7 @@ $vpn = $vpnObj->get(['status', '=', '1']);
                         <h3 class="box-title">New VPN</h3>
                     </div>
                     <div class="box-body">
-                        <form role="form" class="" method="post" action="addvpn" id="create">
+                        <form role="form" class="" method="post" action="addvpn" id="create" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="url">Url</label>
                                 <div class="input-group">
@@ -97,6 +103,38 @@ $vpn = $vpnObj->get(['status', '=', '1']);
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label for="file">Config File</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="file" name="file" <?php if(Config::get('app/vpn_file_required')) echo "required"?>>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group add-extra">
+                                <div class="input-group">
+                                    <i style="cursor: pointer" class="text-danger fa fa-plus"><small> add extra fields</small></i>
+                                </div>
+                            </div>
+
+                            <div class="extra hidden">
+                                <div class="form-group">
+                                    <label for="name">Server Name</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="name" name="name">
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="country" name="country">
+
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="box-footer">
                                 <input type="submit" class="btn btn-primary" name="vpn" value="Add">
                             </div>
@@ -110,7 +148,6 @@ $vpn = $vpnObj->get(['status', '=', '1']);
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-    <script type="text/javascript" src="plugins/jQueryUI/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('div.input-group').css("width", "100%");
@@ -123,10 +160,18 @@ $vpn = $vpnObj->get(['status', '=', '1']);
             $('div.create').addClass('hidden');
           }
         }).on('click', "a.delete", function(e) {
-          var pass = confirm("Are you sure you want delete this vpn?");
+          var pass = confirm("Are you sure you want delete this vpn and its configuration file?");
           if(!pass) {
             e.preventDefault();
           }
+        }).on('click', "div.add-extra", function() {
+            if($('div.extra').hasClass('hidden')) {
+                $("div.extra").removeClass('hidden');
+                $('div.add-extra').find('small').text(" close");
+            }else {
+                $("div.extra").addClass('hidden');
+                $('div.add-extra').find('small').text(" add extra fields");
+            }
         })
     })
 </script>

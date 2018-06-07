@@ -46,14 +46,14 @@ $vpn = $vpn[0];
                         <h3 class="box-title">Edit VPN</h3>
                     </div>
                     <div class="box-body">
-                        <form role="form" class="" method="post" action="addvpn">
+                        <form role="form" class="" method="post" action="addvpn" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="url">Url</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="url" name="url" value="<?php echo escape($vpn->url)?>" required>
                                 </div>
                             </div>
-                            <input type="hidden" name="id" value="<?php echo $Qstring ?>">
+                            <input type="hidden" name="id" value="<?php echo escape($Qstring) ?>">
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <div class="input-group">
@@ -65,6 +65,35 @@ $vpn = $vpn[0];
                                 <label for="password">Password</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="password" name="password" value="<?php echo escape($vpn->password)?>" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="file"><?php echo (!empty($vpn->file_url)) ? 'Change': 'Add' ?> Config File</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="file" name="file" >
+                                </div>
+                            </div>
+
+                            <div class="form-group add-extra">
+                                <div class="input-group">
+                                    <i style="cursor: pointer" class="text-danger fa fa-plus"><small> edit extra fields</small></i>
+                                </div>
+                            </div>
+
+                            <div class="extra hidden">
+                                <div class="form-group">
+                                    <label for="name">Server Name</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="name" name="name" value="<?php echo escape($vpn->server_name)?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="country" name="country" value="<?php echo escape($vpn->country)?>">
+                                    </div>
                                 </div>
                             </div>
 
@@ -81,6 +110,20 @@ $vpn = $vpn[0];
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('div.input-group').css("width", "100%");
+            $(document).on('click', "div.add-extra", function() {
+                if($('div.extra').hasClass('hidden')) {
+                    $("div.extra").removeClass('hidden');
+                    $('div.add-extra').find('small').text(" close");
+                }else {
+                    $("div.extra").addClass('hidden');
+                    $('div.add-extra').find('small').text(" add extra fields");
+                }
+            })
+        })
+    </script>
 <?php
 require_once 'includes/content/footer.php';
 ?>

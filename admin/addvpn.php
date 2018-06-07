@@ -14,9 +14,15 @@ if(Input::exists() && !empty(Input::get('vpn'))) {
         'password' => array(
             'required' => true,
             'max' => 255
+        ),
+        'name' => array(
+            'max' => 255
+        ),
+        'country' => array(
+            'max' => 255
         )
-
     ));
+    $validation->checkConfigFile('file');
     if ($validation->passed()) {
         try {
             $vpnObj->add();
@@ -49,9 +55,15 @@ if(Input::exists() && !empty(Input::get('vpnEdit'))) {
         'password' => array(
             'required' => true,
             'max' => 255
+        ),
+        'name' => array(
+            'max' => 255
+        ),
+        'country' => array(
+            'max' => 255
         )
     ));
-
+    if(!empty($_FILES['file'])) $validation->checkConfigFile('file', false);
     if ($validation->passed()) {
         try {
             $vpnObj->edit();
